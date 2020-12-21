@@ -3,7 +3,6 @@ import {
   BrowserRouter,
   Route,
   Switch,
-  NavLink,
 } from 'react-router-dom';
 import axios from 'axios';
 import apiKey from './config';
@@ -33,27 +32,29 @@ componentDidMount() {
 
 }
 
-//FIGURE OUT THE TABS
-querySearch = (query='mountains') => {
+//results array in photocontainer is not clearing out previous search
+//keeps mountains array if mountains is searched, overriding photos array
+//etc.
+querySearch = (query = 'tech') => {
 
     axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`)
       .then(response => {
         if (query === "mountains") {this.setState(
           {mountains: response.data.photos.photo},
-          console.log("if then", this.state)
+          console.log("if then mountains", this.state)
           )}
           else if (query === "trees") {this.setState(
             {trees: response.data.photos.photo},
-            console.log("if then", this.state)
+            console.log("if then trees", this.state)
             )}
           else if (query === "stars") {this.setState(
             {stars: response.data.photos.photo},
-            console.log("if then", this.state)
+            console.log("if then stars", this.state)
             )}
           else if (query) {
             this.setState(
-            {stars: response.data.photos.photo},
-            console.log("if then", this.state)
+            {photos: response.data.photos.photo},
+            console.log("if then query", this.state)
             )}
     })  
       .catch(error => {
@@ -73,13 +74,14 @@ querySearch = (query='mountains') => {
       </div>
       <Search onSearch={this.querySearch}/> 
       <div className='main-nav'>
-        <Nav onClick={this.querySearch}/>
+        <Nav /*onClick={this.querySearch}*//>
       </div>  
       <div className="main-content">
           <Switch> 
               <Route exact path="/" render={() => <PhotoContainer data={this.state.mountains} />}/>
               <Route path="/trees" render={() => <PhotoContainer data={this.state.trees} />}/>
               <Route path="/stars" render={() => <PhotoContainer data={this.state.stars} />}/>
+              <Route path={"/search/:query"} render= {() => <PhotoContainer data={this.state.photos} />}/>
           </Switch>  
       
       </div>      
