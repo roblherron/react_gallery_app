@@ -1,23 +1,29 @@
 import React, {Component} from 'react';
 import Photo from './Photo';
+import NotFound from './NotFound';
+
 
 export default class PhotoContainer extends Component {
-// HOW DO I MAKE THE RESULTS DYNAMIC??
+
 render() {
 let results = this.props.data;
-    
-    console.log("results", results, "the Props:", this.props);
+ let query = this.props.query;
+ console.log("query", query)
+    console.log("results", results, "the Props:", this.props, "This:", this);
+    console.log("content", results.length)
     let photos = results.map( (photo, index) =>
         <Photo data= {results[index]}
         key={photo.id}/>);
+   if (results.length < 1) {
+    return (
+    <NotFound />
+    )
 
-    return(
+ } else {
+    return (
         <ul className="photo-container">
             {photos}
         </ul>
-    );
+    );}
+};
 }
-}
-
-//APP WILL PULL DATA FROM TABS.JS AND SEND IT TO PHOTOCONTAINER VIA ROUTE RENDER  WHICH WILL BECOME RESULTS 
-//TO MAP AND RENDER

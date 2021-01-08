@@ -89,11 +89,11 @@ input {
 .photo-container li:hover img {
   transform: scale(1.65);
 }
-/*
+
 .photo-container .not-found {
   width: 100%;
 }
-
+/*
 @media only screen and (max-width: 767px)  {
   body {
     padding-top: 2em;

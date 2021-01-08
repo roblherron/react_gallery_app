@@ -1,7 +1,16 @@
+/* 
+TO-DO: 
+1. create loading feature
+2. review code, add comments, and debug
+*/
+
+
+
 import React, {Component} from 'react';
 import {
   BrowserRouter,
   Route,
+  Redirect,
   Switch,
 } from 'react-router-dom';
 import axios from 'axios';
@@ -11,6 +20,8 @@ import apiKey from './config';
 import PhotoContainer from './components/PhotoContainer';
 import Search from './components/Search';
 import Nav from './components/Nav';
+import NotFound from './components/NotFound';
+
 
 
 export default class App extends Component {
@@ -21,40 +32,39 @@ export default class App extends Component {
       photos: [],
       mountains: [],
       trees: [],
-      stars: []
+      stars: [],
+      query: ''
     };
   } 
 
+
 componentDidMount() {
-
-  this.querySearch(); 
-  console.log("App This:", this, "state is", this.state)
-
+  this.querySearch();
+  this.querySearch('trees') ;
+  this.querySearch('stars')
 }
 
-//results array in photocontainer is not clearing out previous search
-//keeps mountains array if mountains is searched, overriding photos array
-//etc.
-querySearch = (query = 'tech') => {
+
+querySearch = (query = 'mountains') => {
 
     axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`)
       .then(response => {
         if (query === "mountains") {this.setState(
           {mountains: response.data.photos.photo},
-          console.log("if then mountains", this.state)
+          console.log("state", this.state)
           )}
           else if (query === "trees") {this.setState(
             {trees: response.data.photos.photo},
-            console.log("if then trees", this.state)
             )}
           else if (query === "stars") {this.setState(
             {stars: response.data.photos.photo},
-            console.log("if then stars", this.state)
             )}
           else if (query) {
             this.setState(
-            {photos: response.data.photos.photo},
-            console.log("if then query", this.state)
+            {photos: response.data.photos.photo,
+            query: `${this.state.query}`},
+            
+            console.log("state", this.state)
             )}
     })  
       .catch(error => {
@@ -63,7 +73,6 @@ querySearch = (query = 'tech') => {
   }
 
   render() { 
-    console.log("rendered state", this.state);
     return (
       <BrowserRouter>
     <div>
@@ -73,22 +82,26 @@ querySearch = (query = 'tech') => {
         </div>
       </div>
       <Search onSearch={this.querySearch}/> 
-      <div className='main-nav'>
-        <Nav /*onClick={this.querySearch}*//>
       </div>  
+      <div className='main-nav'>
+          <Nav /> 
+      </div>
       <div className="main-content">
           <Switch> 
-              <Route exact path="/" render={() => <PhotoContainer data={this.state.mountains} />}/>
-              <Route path="/trees" render={() => <PhotoContainer data={this.state.trees} />}/>
-              <Route path="/stars" render={() => <PhotoContainer data={this.state.stars} />}/>
-              <Route path={"/search/:query"} render= {() => <PhotoContainer data={this.state.photos} />}/>
+              <Route exact path ="/" render={() => <Redirect to="/search/mountains" />} /> 
+              <Route path="/search/mountains" render={() => <PhotoContainer data={this.state.mountains} />}/>
+              <Route path="/search/trees" render={() => <PhotoContainer data={this.state.trees} />}/>
+              <Route path="/search/stars" render={() => <PhotoContainer data={this.state.stars} />}/>
+              <Route path={"/search/:query"} render= {() => <PhotoContainer data={this.state.photos}/>}/>
+              <Route path="/no-results" render={() => <NotFound data={this.state.photos}/>} />
           </Switch>  
       
       </div>      
         
-    </div>
+    
       </BrowserRouter>
     );
   }
 };
 
+ 
