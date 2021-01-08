@@ -1,8 +1,7 @@
 /* 
 TO-DO: 
 1. create loading feature
-2. create not-found handler
-3. review code and debug
+2. review code, add comments, and debug
 */
 
 
@@ -21,6 +20,8 @@ import apiKey from './config';
 import PhotoContainer from './components/PhotoContainer';
 import Search from './components/Search';
 import Nav from './components/Nav';
+import NotFound from './components/NotFound';
+
 
 
 export default class App extends Component {
@@ -31,7 +32,8 @@ export default class App extends Component {
       photos: [],
       mountains: [],
       trees: [],
-      stars: []
+      stars: [],
+      query: ''
     };
   } 
 
@@ -49,6 +51,7 @@ querySearch = (query = 'mountains') => {
       .then(response => {
         if (query === "mountains") {this.setState(
           {mountains: response.data.photos.photo},
+          console.log("state", this.state)
           )}
           else if (query === "trees") {this.setState(
             {trees: response.data.photos.photo},
@@ -58,7 +61,10 @@ querySearch = (query = 'mountains') => {
             )}
           else if (query) {
             this.setState(
-            {photos: response.data.photos.photo},
+            {photos: response.data.photos.photo,
+            query: `${this.state.query}`},
+            
+            console.log("state", this.state)
             )}
     })  
       .catch(error => {
@@ -86,7 +92,8 @@ querySearch = (query = 'mountains') => {
               <Route path="/search/mountains" render={() => <PhotoContainer data={this.state.mountains} />}/>
               <Route path="/search/trees" render={() => <PhotoContainer data={this.state.trees} />}/>
               <Route path="/search/stars" render={() => <PhotoContainer data={this.state.stars} />}/>
-              <Route path={"/search/:query"} render= {() => <PhotoContainer data={this.state.photos} />}/>
+              <Route path={"/search/:query"} render= {() => <PhotoContainer data={this.state.photos}/>}/>
+              <Route path="/no-results" render={() => <NotFound data={this.state.photos}/>} />
           </Switch>  
       
       </div>      

@@ -6,6 +6,7 @@ import {
 
 
 
+
 class Search extends Component {
   
   state = {
@@ -28,7 +29,8 @@ class Search extends Component {
     let path = `/search/${query}`;
     this.props.history.push(path);
     e.currentTarget.reset();
-    console.log('search state:', this.state);
+
+    console.log('search state:', this.state.searchText);
     console.log(this.props.onSearch)
 
     
@@ -49,7 +51,7 @@ class Search extends Component {
           <button type="submit" id="submit" className="search-button">
           <i className="fas fa-search"></i></button>
         </form>
-
+  
     );
   } 
 }
