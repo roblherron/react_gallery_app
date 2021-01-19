@@ -6,8 +6,8 @@ import NotFound from './NotFound';
 export default class PhotoContainer extends Component {
 
 render() {
-let results = this.props.data;
- let query = this.props.query;
+let results = this.props.data.photos;
+let query = this.props.data.query;
  console.log("query", query)
     console.log("results", results, "the Props:", this.props, "This:", this);
     console.log("content", results.length)
