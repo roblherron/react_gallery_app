@@ -22,17 +22,17 @@ class Search extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    console.log("shapoopy", this.query.value)
+    //console.log("search query value:", this.query.value)
     this.props.onSearch(this.query.value);
-    console.log("whateverthisis", this.props.onSearch)
-    console.log('query value:', this.query.value);
+    //console.log("search props.onsearch:", this.props.onSearch)
+   // console.log('search query value:', this.query.value);
     let query = this.query.value;
     let path = `/search/${query}`;
     this.props.history.push(path);
     e.currentTarget.reset();
 
-    console.log('search state:', this.state.searchText);
-    console.log(this.props.onSearch)
+  //  console.log('search state:', this.state.searchText);
+   // console.log("search props.onsearch:",this.props.onSearch)
 
     
   

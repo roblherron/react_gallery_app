@@ -2,6 +2,7 @@
 TO-DO: 
 1. create loading feature
 2. review code, add comments, and debug
+3. BUG history switches url path but doesn't update query results
 */
 
 
@@ -40,8 +41,6 @@ export default class App extends Component {
 
 componentDidMount() {
   this.querySearch();
-  // this.querySearch('trees') ;
-  // this.querySearch('stars')
   console.log("component mounted")
 }
 
@@ -49,15 +48,15 @@ componentDidMount() {
 querySearch = (query = 'mountains') => {
 
     axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`)
-      .then(response => {
+      .then(response => { //DOESN'T STOP UPDATING WITH NEW PHOTOS
          this.setState(
           {photos: response.data.photos.photo,
             query: `${query}`},
-          console.log("state", this.state)
+         // console.log("state w axios:", this.state)
           )
     })  
       .catch(error => {
-        console.log('Error fetching and parsing data', error);
+        console.log('Error fetching and parsing data:', error);
       });
   }
 
