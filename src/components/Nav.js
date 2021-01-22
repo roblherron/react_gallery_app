@@ -9,13 +9,27 @@ state = {
   query: ''
 }
 
-onClickEvent = e => {
-  this.setState({ query: e.target.innerHTML });
-  console.log("bippity", this.props.data)
+onClickEvent = (e, query) => {
+  query = e.target.innerHTML;
+  this.props.data(query);
+  this.setState({ query });
+  console.log("onclick state:", this.state)
+  console.log("nav query state within onclick:", query)
+
+
 }
 
+
+
+
     render() {
+console.log("Nav props:", this.props.data)
+console.log("Nav query state:", this.state.query)
+
+
+
       return (
+        
         <header>
             <ul className="main-nav">
               <li><NavLink to="/search/mountains" id="mount" onClick={this.onClickEvent}>Mountains</NavLink></li>
