@@ -3,12 +3,7 @@ import {
   withRouter
 } from 'react-router-dom';
 
-
-
-
-
-class Search extends Component {
-  
+class Search extends Component {  
   state = {
     searchText: ''
   }
@@ -17,9 +12,6 @@ class Search extends Component {
     this.setState({ searchText: e.target.value });
   }
 
-
-
-
   handleSubmit = e => {
     e.preventDefault();
     //console.log("search query value:", this.query.value)
@@ -27,23 +19,17 @@ class Search extends Component {
     //console.log("search props.onsearch:", this.props.onSearch)
    // console.log('search query value:', this.query.value);
     let query = this.query.value;
-    let path = `/search/${query}`;
-    this.props.history.push(path);
-    e.currentTarget.reset();
-
-  //  console.log('search state:', this.state.searchText);
-   // console.log("search props.onsearch:",this.props.onSearch)
-
-    
-  
+    let path = `/?q=${query}`;
+    this.props.history.push({
+      pathname: '/search',
+      search: path
+    });
+    e.currentTarget.reset();  
   }
   
   render() {  
-
     return (
-
         <form className="search-form" onSubmit={this.handleSubmit} >
-          
           <input type="search" 
                 onChange={this.onSearchChange}
                 name="search" 
@@ -52,8 +38,8 @@ class Search extends Component {
           <button type="submit" id="submit" className="search-button">
           <i className="fas fa-search"></i></button>
         </form>
-  
     );
   } 
 }
+
 export default withRouter(Search);

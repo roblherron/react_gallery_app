@@ -7,10 +7,10 @@ export default class PhotoContainer extends Component {
 
 render() {
 let results = this.props.data.photos;
-//let query = this.props.data.query;
-    //console.log("photocontainer query:", query)
-   // console.log("results pc:", results, "the Props:", this.props, "This:", this);
-   // console.log("results length:", results.length)
+    let query = this.props.data.query;
+    console.log("photocontainer query:", query)
+    console.log("results pc:", results, "the Props:", this.props, "This:", this);
+    console.log("results length:", results.length)
     let photos = results.map( (photo, index) =>
         <Photo data= {results[index]}
         key={photo.id}/>);
