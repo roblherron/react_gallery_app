@@ -5,28 +5,16 @@ import {
 
 
   export default class Nav extends Component {
-state = {
-  query: ''
-}
-
-onClickEvent = (e, query) => {
-  query = e.target.innerHTML;
-  this.props.data(query);
-  this.setState({ query });
-  
-  console.log("onclick state:", this.state)
-  console.log("nav query state within onclick:", query)
 
 
+onClickEvent = (e) => {
+  this.props.fetchData(e.target.value);
 }
 
 
 
 
     render() {
-      console.log("Nav props:", this.props.data)
-      console.log("Nav query state:", this.state.query)
-
 
       return (
         

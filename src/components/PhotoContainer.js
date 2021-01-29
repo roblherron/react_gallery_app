@@ -6,20 +6,16 @@ import NotFound from './NotFound';
 export default class PhotoContainer extends Component {
 
 render() {
-let results = this.props.data.photos;
-    let query = this.props.data.query;
-    console.log("photocontainer query:", query)
-    console.log("results pc:", results, "the Props:", this.props, "This:", this);
-    console.log("results length:", results.length)
-    let photos = results.map( (photo, index) =>
-        <Photo data= {results[index]}
+    const photos = this.props.photos.map((photo, index) =>
+        <Photo data={this.props.photos[index]}
         key={photo.id}/>);
-   if (results.length < 1) {
+   if (this.props.photos.length < 1) {
+    // instead of rendering component, we could update the url... 🤔
     return (
-    <NotFound />
+        <NotFound queryState={this.props.queryState}/>
     )
-
- } else {
+   }
+   else {
     return (
         <ul className="photo-container">
             {photos}
