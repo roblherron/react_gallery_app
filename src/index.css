@@ -93,44 +93,7 @@ input {
 .photo-container .not-found {
   width: 100%;
 }
-/*
-@media only screen and (max-width: 767px)  {
-  body {
-    padding-top: 2em;
-  }
 
-  .photo-container li {
-    margin: auto;
-  }
-} */
-
-
- /* .photo-container  {
-  /* Prevent vertical gaps */
-  /* line-height: 0;
-  -webkit-column-count: 5;
-  -webkit-column-gap:   0px;
-  -moz-column-count:    5;
-  -moz-column-gap:      0px;
-  column-count:         5;
-  column-gap:           0px;  
-}
-
-.photo-container ul li {
-  width: 220px;
-  height: 165px;
-  overflow: hidden;
-  margin-bottom: 15px;
-}
-.photo-container ul img {
-  /* Just in case there are inline attributes */
-  /* width: 100% !important;
-  height: auto !important;
-}
-
-.photo-container li:hover img {
-  transform: scale(1.65);
-}  */
 
 @media only screen and (min-width: 768px)  {
   body {
