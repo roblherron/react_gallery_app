@@ -3,7 +3,11 @@ import { NavLink } from "react-router-dom";
 
 export default class Nav extends Component {
   onClickEvent = (e) => {
+    e.target.value = e.target.innerHTML;
     this.props.fetchData(e.target.value);
+    this.props.updateQuery(e.target.value);
+    console.log(e.target.value);
+    //current issue is that e.target.value is coming back as undefined
   };
 
   render() {

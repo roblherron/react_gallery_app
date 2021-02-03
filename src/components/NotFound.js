@@ -5,7 +5,7 @@ export default class NotFound extends Component {
     return (
       <div className="not-found">
         <h1>No Results Found</h1>
-        <p>Your search for {this.props.queryState} returned no results.</p>
+        <p>Your search for "{this.props.queryState}" returned no results.</p>
       </div>
     );
   }

@@ -64,11 +64,6 @@ input {
   background-color: #1f8655;
 }
 
-
-
-
-
-
  .photo-container {
   display: flex;
   flex-flow: row wrap;

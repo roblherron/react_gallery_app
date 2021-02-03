@@ -1,5 +1,8 @@
-import { Modal } from "bootstrap";
+import { render } from "@testing-library/react";
 import React from "react";
 import Photo from "./Photo";
+export default class Modal extends Component {
 
-export default Modal;
+    render
+    return(
+    (<Photo/>);)}

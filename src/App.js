@@ -30,7 +30,7 @@ export default class App extends Component {
     this.state = {
       photos: [],
       // perhaps, instead of using react state for this value, we could rely on the url
-      query: "",
+      query: "mountains",
     };
   }
 
@@ -39,10 +39,10 @@ export default class App extends Component {
   }
 
   updateQueryState = (str) => {
-    this.setState({ query: str });
+    this.setState({ query: `${str}` });
   };
 
-  updatePhotosState = (query) => {
+  updatePhotosState = (query = this.state.query) => {
     axios
       .get(
         `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`
@@ -50,7 +50,6 @@ export default class App extends Component {
       .then((response) => {
         this.setState({
           photos: response.data.photos.photo,
-          query,
         });
       })
       .catch((error) => {
@@ -74,7 +73,10 @@ export default class App extends Component {
           />
         </div>
         <div className="main-nav">
-          <Nav fetchData={this.updatePhotosState} />
+          <Nav
+            fetchData={this.updatePhotosState}
+            updateQuery={this.updateQueryState}
+          />
         </div>
         <div className="main-content">
           <Switch>

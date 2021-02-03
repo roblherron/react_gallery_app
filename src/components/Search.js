@@ -7,13 +7,17 @@ class Search extends Component {
   };
 
   handleSubmit = (e) => {
-    e.preventDefault();
-    this.props.onSearch();
-    this.props.history.push({
-      pathname: "/search",
-      // our state lives in the url... (on purpose) 🤔
-      search: `?q=${this.props.queryState}`,
-    });
+    if (this.props.queryState !== "") {
+      e.preventDefault();
+      this.props.onSearch();
+      this.props.history.push({
+        pathname: "/search",
+        // our state lives in the url... (on purpose) 🤔
+        search: `?q=${this.props.queryState}`,
+      });
+    } else {
+      this.props.queryState = "mountains";
+    }
   };
 
   render() {
