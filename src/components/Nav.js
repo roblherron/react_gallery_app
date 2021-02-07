@@ -3,10 +3,9 @@ import { NavLink } from "react-router-dom";
 
 export default class Nav extends Component {
   onClickEvent = (e) => {
-    e.target.value = e.target.innerHTML;
-    this.props.fetchData(e.target.value);
-    this.props.updateQuery(e.target.value);
-    console.log(e.target.value);
+    this.props.fetchData(e.target.id);
+    this.props.updateQuery(e.target.id);
+    console.log(e.target.id);
     //current issue is that e.target.value is coming back as undefined
   };
 
@@ -17,7 +16,7 @@ export default class Nav extends Component {
           <li>
             <NavLink
               to={{ pathname: "search", search: "?q=mountains" }}
-              id="mount"
+              id="mountains"
               onClick={this.onClickEvent}
             >
               Mountains
