@@ -22,8 +22,6 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-src/config.js
-
 #cache
 .eslintcache
 .cache
