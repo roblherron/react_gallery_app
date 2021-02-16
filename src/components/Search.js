@@ -11,7 +11,7 @@ class Search extends Component {
       e.preventDefault();
       this.props.onSearch();
       this.props.history.push({
-        pathname: "react_gallery_app/search",
+        pathname: "/search",
         // our state lives in the url... (on purpose) 🤔
         search: `?q=${this.props.queryState}`,
       });
