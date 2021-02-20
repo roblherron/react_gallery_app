@@ -83,7 +83,7 @@ export default class App extends Component {
             <Route
               exact
               path="/"
-              render={() => <Redirect to="/search/?q=mountains" />}
+              render={() => <Redirect to="/search?q=mountains" />}
             />
             <Route
               path="/search"

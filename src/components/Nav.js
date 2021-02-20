@@ -15,7 +15,10 @@ export default class Nav extends Component {
         <ul className="main-nav">
           <li>
             <NavLink
-              to={{ pathname: "search", search: "?q=mountains" }}
+              to={{
+                pathname: "/search",
+                search: "?q=mountains",
+              }}
               id="mountains"
               onClick={this.onClickEvent}
             >
@@ -24,7 +27,10 @@ export default class Nav extends Component {
           </li>
           <li>
             <NavLink
-              to={{ pathname: "search", search: "?q=trees" }}
+              to={{
+                pathname: "/search",
+                search: "?q=trees",
+              }}
               id="trees"
               onClick={this.onClickEvent}
             >
@@ -33,7 +39,7 @@ export default class Nav extends Component {
           </li>
           <li>
             <NavLink
-              to={{ pathname: "search", search: "?q=stars" }}
+              to={{ pathname: "/search", search: "?q=stars" }}
               id="stars"
               onClick={this.onClickEvent}
             >
