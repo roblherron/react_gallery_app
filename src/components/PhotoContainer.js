@@ -24,15 +24,18 @@ export default class PhotoContainer extends Component {
   }
 
   componentDidMount() {
-    this.updatePhotosState();
+    this.updatePhotosState(); //Need to unmount and remount each time search or nav click event occurs? A: No. Lifecycle methods utilized for this.
   }
 
   updatePhotosState = () => {
     // url param is accessible at this.props.location.search; you can parse this using new URLSearchParam. Google it.
-    const query = '',
+    const queryString = this.props.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const searchQuery = urlParams.get("q");
+    console.log(searchQuery);
     axios
       .get(
-        `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`
+        `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${searchQuery}&per_page=24&format=json&nojsoncallback=1`
       )
       .then((response) => {
         this.setState({
@@ -45,11 +48,10 @@ export default class PhotoContainer extends Component {
   };
 
   render() {
-    console.log("photo props", this.props);
-    const photos = this.props.photos.map((photo, index) => (
-      <Photo data={this.props.photos[index]} key={photo.id} />
+    const photos = this.state.photos.map((photo, index) => (
+      <Photo data={this.state.photos[index]} key={photo.id} />
     ));
-    if (this.props.photos.length < 1) {
+    if (this.state.photos.length < 1) {
       // instead of rendering component, we could update the url... 🤔
       return <NotFound />;
     } else {

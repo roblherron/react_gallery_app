@@ -12,7 +12,8 @@ export default class Nav extends Component {
                 pathname: "/search",
                 search: "?q=mountains",
               }}
-              id="mountains">
+              id="mountains"
+            >
               Mountains
             </NavLink>
           </li>
@@ -22,14 +23,16 @@ export default class Nav extends Component {
                 pathname: "/search",
                 search: "?q=trees",
               }}
-              id="trees">
+              id="trees"
+            >
               Trees
             </NavLink>
           </li>
           <li>
             <NavLink
               to={{ pathname: "/search", search: "?q=stars" }}
-              id="stars">
+              id="stars"
+            >
               Stars
             </NavLink>
           </li>
