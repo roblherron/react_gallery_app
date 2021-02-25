@@ -20,18 +20,24 @@ export default class PhotoContainer extends Component {
     // single source of truth; never duplicated anywhere.
     this.state = {
       photos: [],
+      searchQuery: "mountains",
     };
   }
 
   componentDidMount() {
-    this.updatePhotosState(); //Need to unmount and remount each time search or nav click event occurs? A: No. Lifecycle methods utilized for this.
+    this.updatePhotosState(); //goes into a different lifecycle method.
   }
 
+  // componentDidUpdate(prevState) {
+  //   if (prevState.searchQuery !== this.state.searchQuery) {
+  //     this.updatePhotosState();
+  //   }
+  // } CURRENTLY CREATES INFINITE LOOP
   updatePhotosState = () => {
     // url param is accessible at this.props.location.search; you can parse this using new URLSearchParam. Google it.
     const queryString = this.props.location.search;
     const urlParams = new URLSearchParams(queryString);
-    const searchQuery = urlParams.get("q");
+    const searchQuery = this.state.searchQuery;
     console.log(searchQuery);
     axios
       .get(
@@ -40,6 +46,7 @@ export default class PhotoContainer extends Component {
       .then((response) => {
         this.setState({
           photos: response.data.photos.photo,
+          searchQuery: urlParams.get("q"),
         });
       })
       .catch((error) => {
