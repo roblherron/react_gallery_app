@@ -25,14 +25,14 @@ export default class PhotoContainer extends Component {
   }
 
   componentDidMount() {
-    this.updatePhotosState(); //goes into a different lifecycle method.
+    //goes into a different lifecycle method.
   }
 
-  // componentDidUpdate(prevState) {
-  //   if (prevState.searchQuery !== this.state.searchQuery) {
-  //     this.updatePhotosState();
-  //   }
-  // } CURRENTLY CREATES INFINITE LOOP
+  componentDidUpdate(prevState) {
+    if (prevState.searchQuery !== this.state.searchQuery) {
+      this.updatePhotosState();
+    }
+  }
   updatePhotosState = () => {
     // url param is accessible at this.props.location.search; you can parse this using new URLSearchParam. Google it.
     const queryString = this.props.location.search;
