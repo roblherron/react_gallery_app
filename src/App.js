@@ -1,62 +1,29 @@
-/* 
-TO-DO: 
-1. create loading feature
-2. review code, add comments, and debug
-3. BUG history switches url path but doesn't update query results
-4. BUG nav tabs aren't set to active when clicked
-5. BUG route paths have two 'search/' when navigating
-6. (Optional) Refactor using context API to reduce prop drilling
-*/
+/*
+ * High level principles for app:
+ * (1) Single Source of Truth: for all values and data
+ * (2) Separation of Concerns: only pass data as necessary
+ */
 
 import React, { Component } from "react";
 import { BrowserRouter, Route, Redirect, Switch } from "react-router-dom";
-import axios from "axios";
-import apiKey from "./config";
 
 //App Components
 import PhotoContainer from "./components/PhotoContainer";
 import Search from "./components/Search";
 import Nav from "./components/Nav";
-import NotFound from "./components/NotFound";
 
-// different moments in programming:
-// 1. When you are defining a function (function input is ?)
-// 2. When you are invoking a function (function input is known)
-
+/**
+ * Notes on Application state:
+ * (1) this.state.query (what does this do? A: populates search bar; what is it named? A: searchValue; is it necessary at all? A: yes)
+ * (2) the url value ?q=xyz (query param; defined as queryState)
+ * The source of truth is (2)
+ * We are both reading and writing (1)
+ * We are only writing (2)
+ * TODOs:
+ * (A) We are both reading and writing (2)
+ * (B) (1) is subordinate to (2)
+ **/
 export default class App extends Component {
-  constructor() {
-    super();
-    // single source of truth; never duplicated anywhere.
-    this.state = {
-      photos: [],
-      // perhaps, instead of using react state for this value, we could rely on the url
-      query: "mountains",
-    };
-  }
-
-  componentDidMount() {
-    this.updatePhotosState();
-  }
-
-  updateQueryState = (str) => {
-    this.setState({ query: `${str}` });
-  };
-
-  updatePhotosState = (query = this.state.query) => {
-    axios
-      .get(
-        `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`
-      )
-      .then((response) => {
-        this.setState({
-          photos: response.data.photos.photo,
-        });
-      })
-      .catch((error) => {
-        console.log("Error fetching and parsing data:", error);
-      });
-  };
-
   render() {
     return (
       <BrowserRouter>
@@ -66,39 +33,17 @@ export default class App extends Component {
               <h1 className="main-title">Photo Search</h1>
             </div>
           </div>
-          <Search
-            onSearch={this.updatePhotosState}
-            queryState={this.state.query}
-            updateQueryState={this.updateQueryState}
-          />
+          {/* has local state, to populate search; updates url with new query state */}
+          <Search />
         </div>
         <div className="main-nav">
-          <Nav
-            fetchData={this.updatePhotosState}
-            updateQuery={this.updateQueryState}
-          />
+          {/* updates url with new query state */}
+          <Nav />
         </div>
         <div className="main-content">
           <Switch>
-            <Route
-              exact
-              path="/"
-              render={() => <Redirect to="/search?q=mountains" />}
-            />
-            <Route
-              path="/search"
-              render={() => (
-                <PhotoContainer
-                  photos={this.state.photos}
-                  queryState={this.state.query}
-                />
-              )}
-            />
-            {/* this path is never actually rendered 👇 */}
-            <Route
-              path="/no-results"
-              render={() => <NotFound queryState={this.state.query} />}
-            />
+            <Route exact path="/" render={() => <Redirect to="/search" />} />
+            <Route path="/search" component={PhotoContainer} />
           </Switch>
         </div>
       </BrowserRouter>
