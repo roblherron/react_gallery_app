@@ -30,7 +30,10 @@ export default class Nav extends Component {
           </li>
           <li>
             <NavLink
-              to={{ pathname: "/search", search: "?q=stars" }}
+              to={{
+                pathname: "/search",
+                search: "?q=stars",
+              }}
               id="stars"
             >
               Stars

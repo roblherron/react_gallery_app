@@ -11,7 +11,6 @@ import { BrowserRouter, Route, Redirect, Switch } from "react-router-dom";
 import PhotoContainer from "./components/PhotoContainer";
 import Search from "./components/Search";
 import Nav from "./components/Nav";
-import NotFound from "./components/NotFound";
 
 /**
  * Notes on Application state:
@@ -43,14 +42,8 @@ export default class App extends Component {
         </div>
         <div className="main-content">
           <Switch>
-            <Route
-              exact
-              path="/"
-              render={() => <Redirect to="/search?q=mountains" />}
-            />
+            <Route exact path="/" render={() => <Redirect to="/search" />} />
             <Route path="/search" component={PhotoContainer} />
-            {/* this path is never actually rendered 👇 */}
-            <Route path="/no-results" component={NotFound} />
           </Switch>
         </div>
       </BrowserRouter>

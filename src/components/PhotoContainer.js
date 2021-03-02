@@ -20,24 +20,25 @@ export default class PhotoContainer extends Component {
     // single source of truth; never duplicated anywhere.
     this.state = {
       photos: [],
-      searchQuery: "mountains",
     };
   }
 
   componentDidMount() {
-    //goes into a different lifecycle method.
+    // this does execute on initialRender
+    this.updatePhotosState();
   }
 
-  componentDidUpdate(prevState) {
-    if (prevState.searchQuery !== this.state.searchQuery) {
+  componentDidUpdate(prevProps, prevState) {
+    // this does not execute on initialRender
+    if (prevProps.location.search !== this.props.location.search) {
       this.updatePhotosState();
     }
   }
+
   updatePhotosState = () => {
-    // url param is accessible at this.props.location.search; you can parse this using new URLSearchParam. Google it.
     const queryString = this.props.location.search;
     const urlParams = new URLSearchParams(queryString);
-    const searchQuery = this.state.searchQuery;
+    const searchQuery = urlParams.get("q");
     console.log(searchQuery);
     axios
       .get(
@@ -46,7 +47,6 @@ export default class PhotoContainer extends Component {
       .then((response) => {
         this.setState({
           photos: response.data.photos.photo,
-          searchQuery: urlParams.get("q"),
         });
       })
       .catch((error) => {
@@ -55,12 +55,21 @@ export default class PhotoContainer extends Component {
   };
 
   render() {
+    const queryString = this.props.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const searchQuery = urlParams.get("q");
     const photos = this.state.photos.map((photo, index) => (
       <Photo data={this.state.photos[index]} key={photo.id} />
     ));
+    if (!this.props.location.search) {
+      return (
+        <h2>
+          <i>Please enter a search term.</i>
+        </h2>
+      );
+    }
     if (this.state.photos.length < 1) {
-      // instead of rendering component, we could update the url... 🤔
-      return <NotFound />;
+      return <NotFound searchQuery={searchQuery} />;
     } else {
       return <ul className="photo-container">{photos}</ul>;
     }

@@ -7,18 +7,40 @@ import { withRouter } from "react-router-dom";
  * on URL change, it updates the text input (reading)
  */
 
-//  TODO: listen for changes to URL, update the search bar with text
 class Search extends Component {
   constructor() {
     super();
     this.state = {
-      searchValue: "mountains",
+      // this value is rightly distinct from the URL param.
+      searchValue: "",
     };
   }
 
-  onSearchChange = (e) => {
+  componentDidMount() {
+    const queryString = this.props.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const newSearchValue = urlParams.get("q");
     this.setState({
-      searchValue: e.target.value,
+      searchValue: newSearchValue,
+    });
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const queryString = this.props.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const newSearchValue = urlParams.get("q");
+    if (prevProps.location.search !== this.props.location.search) {
+      this.setState({
+        searchValue: newSearchValue,
+      });
+      console.log(this.state.searchValue);
+    }
+  }
+
+  onSearchChange = (e) => {
+    const searchTerm = e.target.value;
+    this.setState({
+      searchValue: searchTerm,
     });
   };
 
@@ -26,7 +48,6 @@ class Search extends Component {
     e.preventDefault();
     this.props.history.push({
       pathname: "/search",
-      // our state lives in the url... (on purpose) 🤔
       search: `?q=${this.state.searchValue}`,
     });
   };
@@ -38,7 +59,7 @@ class Search extends Component {
           type="search"
           onChange={this.onSearchChange}
           name="search"
-          value={this.state.searchValue}
+          value={this.state.searchValue || ""}
           placeholder="Search..."
         />
         <button type="submit" id="submit" className="search-button">
