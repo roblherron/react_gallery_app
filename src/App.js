@@ -42,7 +42,11 @@ export default class App extends Component {
         </div>
         <div className="main-content">
           <Switch>
-            <Route exact path="/" render={() => <Redirect to="/search" />} />
+            <Route
+              exact
+              path="/react_gallery_app/"
+              render={() => <Redirect to="/search" />}
+            />
             <Route path="/search" component={PhotoContainer} />
           </Switch>
         </div>
