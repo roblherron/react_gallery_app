@@ -26,7 +26,7 @@ import Nav from "./components/Nav";
 export default class App extends Component {
   render() {
     return (
-      <BrowserRouter>
+      <BrowserRouter basename="/react_gallery_app">
         <div>
           <div className="main-header">
             <div className="inner">
@@ -42,11 +42,7 @@ export default class App extends Component {
         </div>
         <div className="main-content">
           <Switch>
-            <Route
-              exact
-              path="/react_gallery_app/"
-              render={() => <Redirect to="/search" />}
-            />
+            <Route exact path="/" render={() => <Redirect to="/search" />} />
             <Route path="/search" component={PhotoContainer} />
           </Switch>
         </div>
