@@ -5,7 +5,7 @@
  */
 
 import React, { Component } from "react";
-import { BrowserRouter, Route, Redirect, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 //App Components
 import PhotoContainer from "./components/PhotoContainer";
@@ -42,8 +42,12 @@ export default class App extends Component {
         </div>
         <div className="main-content">
           <Switch>
+<<<<<<< Updated upstream
             <Route exact path="/" render={() => <Redirect to="/search" />} />
             <Route path="/search" component={PhotoContainer} />
+=======
+            <Route path="/" component={PhotoContainer} />
+>>>>>>> Stashed changes
           </Switch>
         </div>
       </BrowserRouter>
