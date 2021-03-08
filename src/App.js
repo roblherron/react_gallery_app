@@ -42,12 +42,7 @@ export default class App extends Component {
         </div>
         <div className="main-content">
           <Switch>
-<<<<<<< Updated upstream
-            <Route exact path="/" render={() => <Redirect to="/search" />} />
-            <Route path="/search" component={PhotoContainer} />
-=======
             <Route path="/" component={PhotoContainer} />
->>>>>>> Stashed changes
           </Switch>
         </div>
       </BrowserRouter>
