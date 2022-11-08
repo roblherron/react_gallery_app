@@ -42,7 +42,7 @@ export default class PhotoContainer extends Component {
     console.log(searchQuery);
     axios
       .get(
-        `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${searchQuery}&per_page=24&format=json&nojsoncallback=1`
+        `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${searchQuery}&safe_search=1&per_page=24&format=json&nojsoncallback=1`
       )
       .then((response) => {
         this.setState({
